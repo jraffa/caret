@@ -421,7 +421,7 @@ preProcess.default <- function(x, method = c("center", "scale"),
     if(verbose) cat("Computing bagging models for", length(method$bagImpute), "predictors...")
     bagModels <- as.list(method$bagImpute)
     names(bagModels) <- method$bagImpute
-    print(nrow(x))
+    #print(nrow(x))
     bagModels <- lapply(bagModels, bagImp, x = x)
     if(verbose) cat(" done\n")
   } else bagModels <- NULL
@@ -798,7 +798,7 @@ bagImp <- function(var, x, B = 10) {
                         data = x,
                         nbagg = B,
                         x = FALSE, 
-                        keepX = FALSE)
+                        keepX = FALSE,na.action=rpart::na.rpart)
   trim_code <- getModelInfo("treebag", FALSE)[[1]]$trim
   list(var = var,
        model = trim_code(mod))
